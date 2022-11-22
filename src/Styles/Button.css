@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap');
+.custom-button{
+    padding: 12px 24px;
+    gap: 8px;
+    background: var(--default-primary-button-background);
+    border:none;
+    border-radius: 8px;
+    font-family: 'Inter';
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    text-align: center;
+    letter-spacing: 0.02em;
+    color: var(--white);
+    cursor:pointer;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+.custom-button:hover{
+    background: var(--hover-primary-button-background)
+}

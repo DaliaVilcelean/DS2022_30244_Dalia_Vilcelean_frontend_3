@@ -8,7 +8,7 @@ import { FormGroup, Input, Label} from 'reactstrap';
 
 
 
-class PersonForm extends React.Component {
+class UpdatePersonForm extends React.Component {
 
     constructor(props) {
         super(props);
@@ -23,9 +23,16 @@ class PersonForm extends React.Component {
             formIsValid: false,
 
             formControls: {
+                id: {
+                    value: '',
+                    placeholder: 'What User to update?...',
+                    valid: false,
+                    touched: false,
+                   
+                },
                 name: {
                     value: '',
-                    placeholder: 'What is your name?...',
+                    placeholder: 'Name?...',
                     valid: false,
                     touched: false,
                     validationRules: {
@@ -104,10 +111,10 @@ class PersonForm extends React.Component {
 
     };
 
-    registerPerson(person) {
-        return API_USERS.postPerson(person, (result, status, error) => {
+    updatePerson(person) {
+        return API_USERS.updateUser(person, (result, status, error) => {
             if (result !== null && (status === 200 || status === 201)) {
-                console.log("Successfully inserted person with id: " + result);
+                console.log("Successfully updated person with id: " + result);
                 this.reloadHandler();
             } else {
                 this.setState(({
@@ -122,6 +129,7 @@ class PersonForm extends React.Component {
 
     handleSubmit() {
         let person = {
+            id: this.state.formControls.id.value,
             name: this.state.formControls.name.value,
             username: this.state.formControls.username.value,
             password: this.state.formControls.password.value,
@@ -133,7 +141,7 @@ class PersonForm extends React.Component {
 
         console.log(JSON.stringify( person));
 
-        this.registerPerson(person); 
+        this.updatePerson(person); 
       
     }
    
@@ -141,6 +149,20 @@ class PersonForm extends React.Component {
     render() {
         return (
             <div>
+
+                <FormGroup id='id'>
+                    <Label for='idField'> Id: </Label>
+                    <Input name='id' id='idField' placeholder={this.state.formControls.id.placeholder}
+                           onChange={this.handleChange}
+                           defaultValue={this.state.formControls.id.value}
+                           touched={this.state.formControls.id.touched? 1 : 0}
+                           valid={this.state.formControls.id.valid}
+                           required
+                    />
+                    {this.state.formControls.id.touched && !this.state.formControls.id.valid 
+                   }
+                </FormGroup>
+
 
                 <FormGroup id='name'>
                     <Label for='nameField'> Name: </Label>
@@ -214,7 +236,7 @@ class PersonForm extends React.Component {
 
                     <Row>
                         <Col sm={{size: '4', offset: 8}}>
-                            <Button type={"submit"} disabled={!this.state.formIsValid} onClick={this.handleSubmit}>  Submit </Button>
+                            <Button type={"submit"} disabled={!this.state.formIsValid} onClick={this.handleSubmit}>  Update </Button>
                             
                         </Col>
                     </Row>
@@ -228,4 +250,4 @@ class PersonForm extends React.Component {
     }
 }
 
-export default PersonForm;
+export default UpdatePersonForm;

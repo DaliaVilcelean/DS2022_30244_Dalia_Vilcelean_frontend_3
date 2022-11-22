@@ -3,15 +3,16 @@ import RestApiClient from "../../commons/api/rest-client";
 
 
 const endpoint = {
-    person: 'User/FindAllUsers',
-    delete:'User/DeleteUser/'
+    person: 'Devices/FindAllDevices',
+    deviceId:'Devices/FindDeviceById',
+    deleteDevice:'Devices/DeleteDevice/'
 };
 const endpoint1 = {
-    person: 'User/AddUser',
-    update:'User/UpdateUser'
+    person: 'Devices/AddDevice',
+    update:'Devices/UpdateDevice'
 };
 
-function getPersons(callback) {
+function getDevices(callback) {
     
     let request = new Request(HOST.backend_api + endpoint.person, {
         method: 'GET',
@@ -22,16 +23,25 @@ function getPersons(callback) {
 
 }
 
-function getPersonById(params, callback){
-    let request = new Request(HOST.backend_api + endpoint.person + params.id, {
+function getDeviceById(params, callback){
+    let request = new Request(HOST.backend_api + endpoint.deviceId+'{' + params.id+'}', {
        method: 'GET'
     });
 
     console.log(request.url);
     RestApiClient.performRequest(request, callback);
 }
+function deleteDeviceById(params, callback){
+    let request = new Request(HOST.backend_api + endpoint.deleteDevice + params.id, {
+       method: 'DELETE'
+    });
 
-function postPerson(user, callback){
+    console.log(request.url);
+    RestApiClient.performRequest(request, callback);
+}
+
+
+function postDevice(user, callback){
     
     let request = new Request(HOST.backend_api + endpoint1.person , {
         method: 'POST',
@@ -45,19 +55,9 @@ function postPerson(user, callback){
     console.log("URL: " + request.url);
 
     RestApiClient.performRequest(request, callback);
-   
+  
 }
-
-function deleteUserById(params, callback){
-    let request = new Request(HOST.backend_api + endpoint.delete + params.id, {
-       method: 'DELETE'
-    });
-
-    console.log(request.url);
-    RestApiClient.performRequest(request, callback);
-}
-
-function updateUser(user, callback){
+function updateDevice(user, callback){
     
     let request = new Request(HOST.backend_api + endpoint1.update, {
         method: 'POST',
@@ -74,11 +74,10 @@ function updateUser(user, callback){
   
 }
 
-
 export {
-    getPersons,
-    getPersonById,
-    postPerson,
-    deleteUserById,
-    updateUser
+    getDevices,
+    getDeviceById,
+    postDevice,
+    deleteDeviceById,
+    updateDevice
 };

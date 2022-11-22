@@ -10,27 +10,23 @@ import {
     ModalHeader,
     Row
 } from 'reactstrap';
-import PersonForm from "./components/person-form";
-import DeletePersonForm from "./components/deletePerson-form";
-import UpdatePersonForm from "./components/updatePerson-form";
-
-import * as API_USERS from "./api/person-api"
-import PersonTable from "./components/person-table";
-
+import DeviceForm from "./components/device-form";
+import DeleteDeviceForm from "./components/deleteDevice-form";
+import UpdateDeviceForm from "./components/updateDevice-form.js";
+import * as API_DEVICES from "./api/device-api"
+import DeviceTable from "./components/device-table";
 
 
 
-
-class PersonContainer extends React.Component {
+class DeviceContainer extends React.Component {
 
     constructor(props) {
         super(props);
         this.toggleForm = this.toggleForm.bind(this);
         this.toggleForm1 = this.toggleForm1.bind(this);
         this.toggleForm2 = this.toggleForm2.bind(this);
+    
         this.reload = this.reload.bind(this);
-      
-        
         
         this.state = {
             selected: false,
@@ -42,19 +38,15 @@ class PersonContainer extends React.Component {
             errorStatus: 0,
             error: null
         };
-  
+       
     }
 
     componentDidMount() {
-        this.fetchPersons();
+        this.fetchDevices();
     }
 
-
-  
-
-
-    fetchPersons() {
-        return API_USERS.getPersons((result, status, err) => {
+    fetchDevices() {
+        return API_DEVICES.getDevices((result, status, err) => {
 
             if (result !== null && status === 200) {
                 this.setState({
@@ -81,53 +73,49 @@ class PersonContainer extends React.Component {
     toggleForm2() {
         this.setState({selected2: !this.state.selected2});
     }
- 
- 
+
 
     reload() {
         this.setState({
             isLoaded: false
         });
         this.toggleForm();
-        
-        this.fetchPersons();
+        this.toggleForm1();
+        this.toggleForm2();
+        this.fetchDevices();
     }
-   
-
 
     render() {
         return (
             <div>
                 <CardHeader>
-                    <strong> Person Management </strong>
+                    <strong> Device Management </strong>
                 </CardHeader>
                 <Card>
                     <br/>
                     <Row>
                         <Col sm={{size: '8', offset: 1}}>
-                            <Button color="primary" onClick={this.toggleForm}>Add Person </Button>
+                            <Button color="primary" onClick={this.toggleForm}>Add Device </Button>
+                        </Col>
+                    </Row>
+                    <br/>
+                    <Row>
+                        <Col sm={{size: '8', offset: 1}}>
+                            <Button color="primary" onClick={this.toggleForm1}>Delete Device </Button>
                         </Col>
                     </Row>
 
                     <br/>
                     <Row>
                         <Col sm={{size: '8', offset: 1}}>
-                            <Button color="primary" onClick={this.toggleForm1}>Delete Person </Button>
+                            <Button color="primary" onClick={this.toggleForm2}>Update Device </Button>
                         </Col>
                     </Row>
 
                     <br/>
                     <Row>
                         <Col sm={{size: '8', offset: 1}}>
-                            <Button color="primary" onClick={this.toggleForm2}>Update Person </Button>
-                        </Col>
-                    </Row>
-                
-                 
-                    <br/>
-                    <Row>
-                        <Col sm={{size: '8', offset: 1}}>
-                            {this.state.isLoaded && <PersonTable tableData = {this.state.tableData}/>}
+                            {this.state.isLoaded && <DeviceTable tableData = {this.state.tableData}/>}
                             {this.state.errorStatus > 0 && <APIResponseErrorMessage
                                                             errorStatus={this.state.errorStatus}
                                                             error={this.state.error}
@@ -141,27 +129,31 @@ class PersonContainer extends React.Component {
 
                 <Modal isOpen={this.state.selected} toggle={this.toggleForm}
                        className={this.props.className} size="lg">
-                    <ModalHeader toggle={this.toggleForm}> Add Person: </ModalHeader>
+                    <ModalHeader toggle={this.toggleForm}> Add Device: </ModalHeader>
                     <ModalBody>
-                        <PersonForm reloadHandler={this.reload}/>
+                        <DeviceForm reloadHandler={this.reload}/>
                     </ModalBody>
                 </Modal>
+
 
                 <Modal isOpen={this.state.selected1} toggle={this.toggleForm1}
                        className={this.props.className} size="lg">
-                    <ModalHeader toggle={this.toggleForm1}> Delete Person: </ModalHeader>
+                    <ModalHeader toggle={this.toggleForm1}> Delete Device: </ModalHeader>
                     <ModalBody>
-                        <DeletePersonForm reloadHandler={this.reload}/>
+                        <DeleteDeviceForm reloadHandler={this.reload}/>
                     </ModalBody>
                 </Modal>
 
+             
+
                 <Modal isOpen={this.state.selected2} toggle={this.toggleForm2}
                        className={this.props.className} size="lg">
-                    <ModalHeader toggle={this.toggleForm2}> Update Person: </ModalHeader>
+                    <ModalHeader toggle={this.toggleForm2}> Update Device: </ModalHeader>
                     <ModalBody>
-                        <UpdatePersonForm reloadHandler={this.reload}/>
+                        <UpdateDeviceForm reloadHandler={this.reload}/>
                     </ModalBody>
                 </Modal>
+                            
 
             </div>
         )
@@ -170,4 +162,4 @@ class PersonContainer extends React.Component {
 }
 
 
-export default PersonContainer;
+export default DeviceContainer;

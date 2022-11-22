@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=Noto+Sans&display=swap');
+.select-component{
+    font-family: 'Inter', sans-serif;
+    border: 0px solid;
+    height: 44px;   
+    width: 100%;
+    margin-right: 0px;
+    background: var(--gray-one);
+    border-radius: 8px;
+    padding: 10px 16px;
+}
+.option-comp{
+    font-family: 'Inter', sans-serif;
+    margin: 10px;
+}

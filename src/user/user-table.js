@@ -1,34 +1,31 @@
 import React from "react";
-import Table from "../../commons/tables/table";
+import Table from "../commons/tables/table";
 
 
 const columns = [
     {
-        Header: 'Name',
-        accessor: 'name',
+        Header: 'IdUser',
+        accessor: 'idUser',
     },
     {
-        Header: 'UserName',
-        accessor: 'username',
+        Header: 'IdDevice',
+        accessor: 'idDevice',
     },
     {
-        Header: 'Id',
-        accessor: 'id',
+        Header: 'Address',
+        accessor: 'address',
     },
-    {
-        Header: 'Type',
-        accessor: 'type',
-    }
+ 
 
 ];
 
 const filters = [
     {
-        accessor: 'name',
+        accessor: 'IdUsers',
     }
 ];
 
-class PersonTable extends React.Component {
+class UserTable extends React.Component {
 
     constructor(props) {
         super(props);
@@ -49,4 +46,4 @@ class PersonTable extends React.Component {
     }
 }
 
-export default PersonTable;
+export default UserTable;

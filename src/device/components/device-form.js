@@ -1,14 +1,14 @@
 import React from 'react';
-import validate from "./validators/person-validators";
+import validate from "./validators/device-validators";
 import Button from "react-bootstrap/Button";
-import * as API_USERS from "../api/person-api";
+import * as API_DEVICES from "../api/device-api";
 import APIResponseErrorMessage from "../../commons/errorhandling/api-response-error-message";
 import {Col, Row} from "reactstrap";
 import { FormGroup, Input, Label} from 'reactstrap';
 
 
 
-class PersonForm extends React.Component {
+class DeviceForm extends React.Component {
 
     constructor(props) {
         super(props);
@@ -25,7 +25,7 @@ class PersonForm extends React.Component {
             formControls: {
                 name: {
                     value: '',
-                    placeholder: 'What is your name?...',
+                    placeholder: 'What is device s name?...',
                     valid: false,
                     touched: false,
                     validationRules: {
@@ -33,32 +33,12 @@ class PersonForm extends React.Component {
                         isRequired: true
                     }
                 },
-                username: {
+                description: {
                     value: '',
-                    placeholder: ' Username...',
+                    placeholder: ' Description...',
                     valid: false,
                     touched:false,
-                    validationRules: {
-                        emailValidator: true
-                    }
-                },
-                password: {
-                    value: '',
-                    placeholder: 'Password...',
-                    valid: false,
-                    touched: false,
-                   
-                },
-                age: {
-                    value: 0,
-                    placeholder: 'Age...',
-                    valid: false,
-                    touched: false,
-                },
-                type: {
-                    value: 'user',
-                    valid: true,
-                    touched: false,
+                
                 },
                 address: {
                     value: '',
@@ -66,6 +46,13 @@ class PersonForm extends React.Component {
                     valid: false,
                     touched: false,
                 },
+                maxHConsumption: {
+                    value: 0,
+                    placeholder: 'Age...',
+                    valid: false,
+                    touched: false,
+                },
+               
             }
         };
 
@@ -104,10 +91,10 @@ class PersonForm extends React.Component {
 
     };
 
-    registerPerson(person) {
-        return API_USERS.postPerson(person, (result, status, error) => {
+    registerDevice(device) {
+        return API_DEVICES.postDevice(device, (result, status, error) => {
             if (result !== null && (status === 200 || status === 201)) {
-                console.log("Successfully inserted person with id: " + result);
+                console.log("Successfully inserted device with id: " + result);
                 this.reloadHandler();
             } else {
                 this.setState(({
@@ -123,17 +110,16 @@ class PersonForm extends React.Component {
     handleSubmit() {
         let person = {
             name: this.state.formControls.name.value,
-            username: this.state.formControls.username.value,
-            password: this.state.formControls.password.value,
-            age:parseInt( this.state.formControls.age.value),
+            description: this.state.formControls.description.value,
             address: this.state.formControls.address.value,
-            type:this.state.formControls.type.value
+          
+            maxHConsumption: parseInt(this.state.formControls.maxHConsumption.value),
+            
+           
         };
-        
 
-        console.log(JSON.stringify( person));
-
-        this.registerPerson(person); 
+        console.log(person);
+        this.registerDevice(person); 
       
     }
    
@@ -155,38 +141,16 @@ class PersonForm extends React.Component {
                     <div className={"error-message row"}> * Name must have at least 3 characters </div>}
                 </FormGroup>
 
-                <FormGroup id='username'>
-                    <Label for='usernameField'> Username: </Label>
-                    <Input name='username' id='username' placeholder={this.state.formControls.username.placeholder}
+                <FormGroup id='description'>
+                    <Label for='descriptionField'> Username: </Label>
+                    <Input name='description' id='description' placeholder={this.state.formControls.description.placeholder}
                            onChange={this.handleChange}
-                           defaultValue={this.state.formControls.username.value}
-                           touched={this.state.formControls.username.touched? 1 : 0}
-                           valid={this.state.formControls.username.valid}
+                           defaultValue={this.state.formControls.description.value}
+                           touched={this.state.formControls.description.touched? 1 : 0}
+                           valid={this.state.formControls.description.valid}
                            required
                     />
-                    {this.state.formControls.username.touched && !this.state.formControls.username.valid &&
-                    <div className={"error-message"}> * Username must have a valid format</div>}
-                </FormGroup>
-                <FormGroup id='password'>
-                    <Label for='passwordField'> Password: </Label>
-                    <Input name='password' id='passwordField' placeholder={this.state.formControls.password.placeholder}
-                           onChange={this.handleChange}
-                           defaultValue={this.state.formControls.password.value}
-                           touched={this.state.formControls.password.touched? 1 : 0}
-                           valid={this.state.formControls.password.valid}
-                           required
-                    />
-                </FormGroup>
-                <FormGroup id='type'>
-                    <Label for='typeField'> Type: </Label>
-                    <Input name='type' id='typeField' 
-                           
-                           onChange={this.handleChange}
-                           defaultValue={this.state.formControls.type.value}
-                           touched={this.state.formControls.type.touched? 1 : 0}
-                           valid={this.state.formControls.type.valid}
-                           required
-                    />
+                   
                 </FormGroup>
 
                 <FormGroup id='address'>
@@ -200,14 +164,16 @@ class PersonForm extends React.Component {
                     />
                 </FormGroup>
 
-                <FormGroup id='age'>
-                    <Label for='ageField'> Age: </Label>
-                    <Input name='age' id='ageField' placeholder={this.state.formControls.age.placeholder}
-                          min={0} max={100} type='number'
+               
+
+                <FormGroup id='maxHConsumption'>
+                    <Label for='maxHConsumptionField'> Max Hourly Consumption: </Label>
+                    <Input name='maxHConsumption' id='maxHConsumptionField' placeholder={this.state.formControls.maxHConsumption.placeholder}
+                          min={0} max={1000} type='number'
                            onChange={this.handleChange}
-                           defaultValue={this.state.formControls.age.value}
-                           touched={this.state.formControls.age.touched? 1 : 0}
-                           valid={this.state.formControls.age.valid}
+                           defaultValue={this.state.formControls.maxHConsumption.value}
+                           touched={this.state.formControls.maxHConsumption.touched? 1 : 0}
+                           valid={this.state.formControls.maxHConsumption.valid}
                            required
                     />
                 </FormGroup>
@@ -215,7 +181,6 @@ class PersonForm extends React.Component {
                     <Row>
                         <Col sm={{size: '4', offset: 8}}>
                             <Button type={"submit"} disabled={!this.state.formIsValid} onClick={this.handleSubmit}>  Submit </Button>
-                            
                         </Col>
                     </Row>
 
@@ -228,4 +193,4 @@ class PersonForm extends React.Component {
     }
 }
 
-export default PersonForm;
+export default DeviceForm;

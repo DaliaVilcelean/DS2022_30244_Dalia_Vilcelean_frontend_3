@@ -1,49 +1,85 @@
 import React from 'react'
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+import {BrowserRouter , Routes, Route} from 'react-router-dom'
 import NavigationBar from './navigation-bar'
-import Home from './home/home';
-import PersonContainer from './person/person-container'
 
+
+import Routing from './login/Routing.js'
 import ErrorPage from './commons/errorhandling/error-page';
 import styles from './commons/styles/project-style.css';
+import AdminPage from './AdminPage/AdminPage';
+import LogInPage from './login/LogInPage';
+import Home from './home/home.js'
+import PersonContainer from './person/person-container'
+import DeviceContainer from './device/device-container';
+import UserDeviceContainer from './userDevice/userdevice-container';
+import UserPage from './user/UserPage';
 
 class App extends React.Component {
 
 
-    render() {
+    render() {  
+      
+  
 
-        return (
-            <div className={styles.back}>
-            <Router>
-                <div>
-                    <NavigationBar />
-                    <Switch>
+return(
 
-                        <Route
-                            exact
-                            path='/'
-                            render={() => <Home/>}
-                        />
+    <div>
+    <BrowserRouter>
+    <NavigationBar />
+    <Routes>
+  
+       
+        <Route
+             
+             path='/'
+            exact element={ <LogInPage/>}
+         />
+           <Route
+                         
+                         path='/home'
+                        exact element={ <Home/>}
+                     />
+                         <Route
+                         
+                         path='/user'
+                        exact element={ <UserPage/>}
+                     />
 
-                        <Route
-                            exact
-                            path='/person'
-                            render={() => <PersonContainer/>}
-                        />
+                     <Route
+                        
+                         path='/person'
+                          exact element={ <PersonContainer/>}
+                     />
+                     <Route
+                        
+                         path='/device'
+                        exact element={<DeviceContainer/>}
+                     />
+                      <Route
+                        
+                        path='/userdevice'
+                         exact element={ <UserDeviceContainer/>}
+                    />
 
-                        {/*Error*/}
-                        <Route
-                            exact
-                            path='/error'
-                            render={() => <ErrorPage/>}
-                        />
+                     {/*Error*/}
+                     <Route
+                         
+                         path='/error'
+                        exact element={<ErrorPage/>}
+                     />
 
-                        <Route render={() =><ErrorPage/>} />
-                    </Switch>
-                </div>
-            </Router>
-            </div>
-        )
+                     <Route render={() =><ErrorPage/>} />
+
+</Routes>
+                    </BrowserRouter>
+                    </div>
+    
+    
+);
+    
+
+        
+    
     };
 }
 
