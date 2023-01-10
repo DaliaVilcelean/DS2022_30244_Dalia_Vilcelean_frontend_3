@@ -1,10 +1,11 @@
 FROM node:18.12 as build 
 
 
-WORKDIR /react-demo
+WORKDIR /react-app
 
 
-COPY package*.json .
+COPY package.json .
+
 
 
 RUN yarn install --force
@@ -22,4 +23,4 @@ FROM nginx:1.19
 COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
 
 
-COPY --from=build /react-demo/build /usr/share/nginx/html
+COPY --from=build /react-app/build /usr/share/nginx/html

@@ -1,55 +1,71 @@
 
     
-version: "3"
+version: "3.4"
 services:
   db:
     image: mysql:8.0
     restart: unless-stopped
-    healthcheck:            
-        test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
-        timeout: 45s
-        interval: 10s
-        retries: 5
-    command: --default-authentication-plugin=mysql_native_password
+    # healthcheck:            
+    #     test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+    #     timeout: 45s
+    #     interval: 10s
+    #     retries: 5
+    # command: --default-authentication-plugin=mysql_native_password
     environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: 1
       MYSQL_DATABASE: dbenergy
       # So you don't have to use root, but you can if you like
-      MYSQL_ROOT: root
-      # Password for root access
-      MYSQL_ROOT_PASSWORD: Dalia-7100
+      MYSQL_USER: root1
+      #Password for root access
+      
+      MYSQL_PASSWORD: Dalia-7100
+    volumes:
+       - /var/lib/mysql
+       - ./_MySQL_Init_Script:/docker-entrypoint-initdb.d
+      
     ports:
       # <Port exposed> : < MySQL Port running inside container>
-      - 127.0.0.1:3308:3306
+      - '3308:3306'
       # Where our data will be persisted
+
 
       
   demo-be:
-    image: backendimage/dalianth
+    image: backendimage/backend53
     restart: always
     ports:
-      - "44369:443"
+      - "44368:443"
     environment:
-      - DB_IP=172.0.0.1
+
       - DB_IP=db
       - DB_PORT=3308
-      - DB_ROOT=root
+      - DB_USER=root1
       - DB_PASSWORD=Dalia-7100
-      - DB_DBNAME=energy
+      - DB_DBNAME=dbenergy
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - ASPNETCORE_Kestrel__Certificates__Default__Password=password
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+
     volumes:
       - ~/.aspnet/https:/https:ro
-    # depends_on:
-    #   db:
-    #     condition: service_healthy
+    depends_on:
+      - db
+        # condition: service_healthy
+
+  # rabbitmq: 
+  #  image: rabbitmq:3-management
+  #  container_name:
+  #   'rabbitmq'
+  #  ports: 
+  #  - 5672:5672 
+  #  - 15672:15672
 
 
   demo-fe:
-    image: frontendimage/3
+    image: frontendimage/26
     ports:
-      - "8081:80"
+      - "8080:80"
     stdin_open: true
 
 

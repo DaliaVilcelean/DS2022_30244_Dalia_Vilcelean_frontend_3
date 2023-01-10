@@ -115,7 +115,7 @@ class UserDeviceForm extends React.Component {
         };
         
 
-        console.log(JSON.stringify( person));
+        console.log(JSON.stringify(person));
 
         this.registerUserDevice(person); 
       

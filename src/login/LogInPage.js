@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom'
-import validate from "../person/components/validators/person-validators.js"
 import Button from "react-bootstrap/Button";
 import logInApi from "./api/logIn-api.js";
-import {Router} from 'react-router-dom'
 import Input from "../Input";
-import {Route, Navigate} from 'react-router-dom';
 
-import APIResponseErrorMessage from "../commons/errorhandling/api-response-error-message";
-import {Col, Row} from "reactstrap";
-import { FormGroup, Label} from 'reactstrap';
-import AdminPage from "../AdminPage/AdminPage.js";
+import Header from "../user/chat/components/Header/Header";
+
+import { User } from "../chat_pb";
+import { ChatServiceClient } from "../chat_grpc_web_pb";
+import ChatPage from "../user/chat/pages/ChatPage/ChatPage";
+import {  useRef } from "react";
+
+
 export const LOGIN_INPUT_WIDTH = '100%'
 export const LOGIN_INPUT_HEIGHT = '44px'
 export const LOCAL_STORAGE_USER_KEY = 'user'
-
 
 
 
@@ -111,6 +111,11 @@ const LogInPage=()=>{
 
 
 
+
+
+
+
+
 return(
 
     <div className="leftside-container">
@@ -155,7 +160,18 @@ return(
         
            </Button>
       {message && <p className="error-message">{message}</p>}
+
+
+
+          
+
     </div>
+
+   
+
+
+
+
     
 );
 

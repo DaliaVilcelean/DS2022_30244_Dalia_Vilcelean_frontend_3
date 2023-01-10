@@ -9,25 +9,6 @@ const endpoint = {
 };
 
 
-function getPersons(callback) {
-    
-    let request = new Request(HOST.backend_api + endpoint.person1, {
-        method: 'GET',
-    });
-    console.log(request.url);
-    RestApiClient.performRequest(request, callback);
-    
-}
-
-function getDevices(callback) {
-    
-    let request = new Request(HOST.backend_api + endpoint.person2, {
-        method: 'GET',
-    });
-    console.log(request.url);
-    RestApiClient.performRequest(request, callback);
-    
-}
 
 
 function postUserDevice(user, callback){

@@ -1,25 +1,22 @@
 import React from 'react'
 import {BrowserRouter , Routes, Route} from 'react-router-dom'
 import NavigationBar from './navigation-bar'
-
-
-import Routing from './login/Routing.js'
 import ErrorPage from './commons/errorhandling/error-page';
-import styles from './commons/styles/project-style.css';
-import AdminPage from './AdminPage/AdminPage';
 import LogInPage from './login/LogInPage';
 import Home from './home/home.js'
 import PersonContainer from './person/person-container'
 import DeviceContainer from './device/device-container';
 import UserDeviceContainer from './userDevice/userdevice-container';
 import UserPage from './user/UserPage';
+import MessagesTable from './user/MessagesTable';
+
 
 class App extends React.Component {
-
+  
 
     render() {  
       
-  
+    
 
 return(
 

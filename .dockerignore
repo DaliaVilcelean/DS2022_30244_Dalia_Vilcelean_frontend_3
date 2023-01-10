@@ -1,1 +1,7 @@
-**/node_modules
+/node_modules
+/protoc-3.12.4-win64
+/chat.proto
+/client.js
+/protoc.exe
+/protoc-gen-grpc-web.exe
+/server.js

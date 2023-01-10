@@ -7,7 +7,7 @@ WORKDIR /react-demo
 COPY package*.json .
 
 
-RUN yarn install .
+RUN yarn install --force
 
 
 COPY . .
